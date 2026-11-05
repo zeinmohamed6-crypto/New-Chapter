@@ -1,1 +1,93 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100d11">
+
+  <title>New Chapter ♡</title>
+  <meta name="description" content="A little new chapter, just for you ♡">
+
+  <meta property="og:title" content="New Chapter ♡">
+  <meta property="og:description" content="Just for you, Fayrouz ♡">
+  <meta property="og:image" content="preview.png">
+  <meta property="og:type" content="website">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="stars" id="stars"></div>
+
+  <main class="container">
+
+    <section id="welcome" class="screen active">
+      <p class="english">JUST FOR YOU ♡</p>
+      <h1 class="name">فيروز</h1>
+      <p class="question">لسه بتحبيني؟</p>
+
+      <div class="buttons">
+        <button class="yes-btn" onclick="startQuiz()">أيوه ♡</button>
+        <button class="no-btn" onclick="noAnswer()">لأ</button>
+      </div>
+
+      <p id="no-message" class="message"></p>
+      <p class="footer">a new chapter begins...</p>
+    </section>
+
+    <section id="quiz" class="screen">
+      <p class="english">HOW WELL DO YOU KNOW ME? ♡</p>
+
+      <div class="progress">
+        <div id="progress-bar"></div>
+      </div>
+
+      <p id="question-number" class="small-text"></p>
+      <h2 id="quiz-question"></h2>
+
+      <input
+        type="text"
+        id="answer"
+        placeholder="اكتبي إجابتك هنا..."
+        autocomplete="off"
+      >
+
+      <button class="hint-btn" onclick="showHint()">♡ هينت</button>
+      <p id="hint-text" class="hint-text"></p>
+
+      <button class="submit-btn" onclick="checkAnswer()">تأكيد الإجابة</button>
+      <p id="feedback"></p>
+    </section>
+
+    <section id="wrong" class="screen">
+      <div class="broken-heart">♡</div>
+      <h2>مش فاكرة؟</h2>
+      <p id="wrong-message">حاولي تاني، يمكن تفتكري.</p>
+      <button class="submit-btn" onclick="retryAnswer()">أحاول تاني</button>
+    </section>
+
+    <section id="final" class="screen">
+      <p class="english">YOU MADE IT ♡</p>
+      <h2>وصلتي للنهاية يا فيروز</h2>
+      <p>في حاجة صغيرة مستنياكي...</p>
+
+      <div class="envelope" onclick="openLetter()">
+        <div class="envelope-heart">♡</div>
+        <p>افتحيني</p>
+      </div>
+
+      <div id="letter" class="letter">
+        <h2>From Zain ♡</h2>
+        <p>لسه في كلام كتير عايز أقولهولك...</p>
+        <p>الرسالة الحقيقية هنكتبها هنا قريبًا.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
