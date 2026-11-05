@@ -9,6 +9,7 @@
   --pink: #d7a4b5;
   --white: #f5edf0;
   --muted: #a99aa2;
+  --red-glow: #b83250;
 }
 
 * {
@@ -74,21 +75,21 @@ body {
   width: 100%;
   max-width: 440px;
   text-align: center;
-  animation: appear 0.7s ease;
 }
 
 .screen.active {
   display: block;
+  animation: appear 0.7s cubic-bezier(.22, 1, .36, 1) both;
 }
 
 @keyframes appear {
   from {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(20px) scale(0.98);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -100,6 +101,7 @@ body {
   font-size: 12px;
   letter-spacing: 4px;
   margin-bottom: 35px;
+  animation: softFade 1s ease both;
 }
 
 .name {
@@ -108,6 +110,16 @@ body {
   color: var(--white);
   text-shadow: 0 0 35px #a34d6850;
   margin-bottom: 8px;
+  animation: nameGlow 4s ease-in-out infinite;
+}
+
+@keyframes nameGlow {
+  0%, 100% {
+    text-shadow: 0 0 25px #a34d6830;
+  }
+  50% {
+    text-shadow: 0 0 40px #a34d6870;
+  }
 }
 
 .question {
@@ -122,6 +134,12 @@ body {
   font-size: 12px;
   letter-spacing: 2px;
   margin-top: 55px;
+  animation: softFade 1.5s ease both;
+}
+
+@keyframes softFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* Buttons */
@@ -135,7 +153,12 @@ body {
 button {
   font-family: 'Cairo', sans-serif;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .yes-btn,
@@ -151,6 +174,16 @@ button {
   background: linear-gradient(135deg, #87334f, #572035);
   border: 1px solid #a34d68;
   box-shadow: 0 5px 25px #70283f40;
+  animation: buttonGlow 3s ease-in-out infinite;
+}
+
+@keyframes buttonGlow {
+  0%, 100% {
+    box-shadow: 0 5px 20px #70283f35;
+  }
+  50% {
+    box-shadow: 0 5px 30px #a34d6860;
+  }
 }
 
 .no-btn {
@@ -161,8 +194,19 @@ button {
 
 .yes-btn:hover,
 .no-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px #70283f55;
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 10px 30px #70283f70;
+}
+
+.no-btn:hover {
+  border-color: var(--pink);
+}
+
+.yes-btn:active,
+.no-btn:active,
+.submit-btn:active,
+.hint-btn:active {
+  transform: scale(0.95);
 }
 
 .message {
@@ -170,6 +214,7 @@ button {
   margin-top: 22px;
   font-size: 14px;
   min-height: 25px;
+  animation: softFade 0.4s ease;
 }
 
 /* Quiz */
@@ -191,13 +236,15 @@ button {
   width: 0%;
   height: 100%;
   background: linear-gradient(90deg, #70283f, #d7a4b5);
-  transition: width 0.5s ease;
+  transition: width 0.8s cubic-bezier(.22, 1, .36, 1);
+  box-shadow: 0 0 12px #d7a4b580;
 }
 
 .small-text {
   color: var(--muted);
   font-size: 12px;
   margin-bottom: 18px;
+  animation: softFade 0.6s ease both;
 }
 
 #quiz-question {
@@ -205,6 +252,20 @@ button {
   font-size: 22px;
   font-weight: 600;
   margin-bottom: 28px;
+  animation: questionEnter 0.65s ease both;
+}
+
+@keyframes questionEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }
 
 input {
@@ -219,7 +280,10 @@ input {
   font-size: 15px;
   outline: none;
   text-align: center;
-  transition: border 0.3s, box-shadow 0.3s;
+  transition:
+    border 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
 }
 
 input::placeholder {
@@ -228,7 +292,8 @@ input::placeholder {
 
 input:focus {
   border-color: var(--burgundy-light);
-  box-shadow: 0 0 18px #70283f35;
+  box-shadow: 0 0 18px #70283f50;
+  transform: translateY(-2px);
 }
 
 .hint-btn {
@@ -242,7 +307,8 @@ input:focus {
 
 .hint-btn:hover {
   color: white;
-  transform: scale(1.05);
+  transform: scale(1.07);
+  text-shadow: 0 0 12px #d7a4b580;
 }
 
 .hint-text {
@@ -250,6 +316,21 @@ input:focus {
   font-size: 13px;
   min-height: 25px;
   margin-bottom: 10px;
+}
+
+.hint-text:not(:empty) {
+  animation: hintAppear 0.5s ease both;
+}
+
+@keyframes hintAppear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .submit-btn {
@@ -261,20 +342,59 @@ input:focus {
   color: white;
   font-size: 15px;
   box-shadow: 0 5px 20px #70283f30;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, #ffffff25, transparent);
+  transition: left 0.6s ease;
+}
+
+.submit-btn:hover::before {
+  left: 140%;
 }
 
 .submit-btn:hover {
   background: linear-gradient(135deg, #97425f, #64243d);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px #70283f65;
 }
 
 #feedback {
   color: var(--pink);
   margin-top: 15px;
   font-size: 13px;
+  animation: softFade 0.3s ease;
 }
 
 /* Wrong answer */
+
+#wrong.active {
+  animation: wrongEnter 0.7s ease both;
+}
+
+@keyframes wrongEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) translateX(0);
+  }
+  15% { transform: translateX(-7px); }
+  30% { transform: translateX(7px); }
+  45% { transform: translateX(-5px); }
+  60% { transform: translateX(5px); }
+  75% { transform: translateX(-2px); }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 
 .broken-heart {
   font-family: 'Playfair Display', serif;
@@ -293,11 +413,22 @@ input:focus {
 #wrong h2 {
   font-size: 25px;
   margin-bottom: 12px;
+  animation: redGlow 2s ease-in-out infinite;
+}
+
+@keyframes redGlow {
+  0%, 100% {
+    text-shadow: 0 0 5px #b8325030;
+  }
+  50% {
+    text-shadow: 0 0 20px #b8325080;
+  }
 }
 
 #wrong p {
   color: var(--muted);
   margin-bottom: 25px;
+  animation: hintAppear 0.8s ease both;
 }
 
 /* Final section */
@@ -327,11 +458,25 @@ input:focus {
   align-items: center;
   flex-direction: column;
   cursor: pointer;
-  transition: transform 0.4s;
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+  animation: envelopeFloat 3.5s ease-in-out infinite;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes envelopeFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
 }
 
 .envelope:hover {
-  transform: translateY(-8px);
+  transform: translateY(-12px) scale(1.04);
+  box-shadow: 0 22px 55px #00000080, 0 0 45px #a34d6860;
+}
+
+.envelope:active {
+  transform: scale(0.96);
 }
 
 .envelope::before {
@@ -346,6 +491,28 @@ input:focus {
   border-top: 75px solid #a34d68;
   z-index: 2;
   filter: brightness(0.9);
+  transition: filter 0.4s ease;
+}
+
+.envelope:hover::before {
+  filter: brightness(1.2);
+}
+
+.envelope::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border: 1px solid #d7a4b530;
+  border-radius: 12px;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.4s ease;
+  pointer-events: none;
+}
+
+.envelope:hover::after {
+  opacity: 1;
+  transform: scale(1.04);
 }
 
 .envelope-heart {
@@ -355,6 +522,13 @@ input:focus {
   font-family: 'Playfair Display', serif;
   font-size: 32px;
   margin-top: 15px;
+  text-shadow: 0 0 15px #ffffff70;
+  animation: heartGlow 2s ease-in-out infinite;
+}
+
+@keyframes heartGlow {
+  0%, 100% { text-shadow: 0 0 8px #ffffff40; }
+  50% { text-shadow: 0 0 20px #ffffffa0; }
 }
 
 .envelope p {
@@ -374,7 +548,20 @@ input:focus {
   text-align: right;
   line-height: 2;
   box-shadow: 0 10px 40px #00000050;
-  animation: appear 0.8s ease;
+  animation: letterReveal 1s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+@keyframes letterReveal {
+  from {
+    opacity: 0;
+    transform: translateY(25px) scale(0.97);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
 }
 
 .letter h2 {
@@ -410,9 +597,35 @@ input:focus {
   .no-btn {
     min-width: 115px;
   }
+
+  .envelope {
+    width: 200px;
+    height: 135px;
+  }
+
+  .envelope::before {
+    border-left-width: 100px;
+    border-right-width: 100px;
+    border-top-width: 70px;
+  }
 }
+
+/* Selection */
 
 ::selection {
   background: #70283f;
   color: white;
+}
+
+/* Reduced motion accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
